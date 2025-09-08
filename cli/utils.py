@@ -1,5 +1,7 @@
 import questionary
 from typing import List, Optional, Tuple, Dict
+from cli.dynamic_ollama_model_list import dynamic_ollama_model_list
+
 
 from cli.models import AnalystType
 
@@ -149,10 +151,7 @@ def select_shallow_thinking_agent(provider) -> str:
             ("Meta: Llama 3.3 8B Instruct - A lightweight and ultra-fast variant of Llama 3.3 70B", "meta-llama/llama-3.3-8b-instruct:free"),
             ("google/gemini-2.0-flash-exp:free - Gemini Flash 2.0 offers a significantly faster time to first token", "google/gemini-2.0-flash-exp:free"),
         ],
-        "ollama": [
-            ("llama3.1 local", "llama3.1"),
-            ("llama3.2 local", "llama3.2"),
-        ]
+        "ollama": dynamic_ollama_model_list("http://localhost:11434/v1"),
     }
 
     choice = questionary.select(
@@ -211,10 +210,7 @@ def select_deep_thinking_agent(provider) -> str:
             ("DeepSeek V3 - a 685B-parameter, mixture-of-experts model", "deepseek/deepseek-chat-v3-0324:free"),
             ("Deepseek - latest iteration of the flagship chat model family from the DeepSeek team.", "deepseek/deepseek-chat-v3-0324:free"),
         ],
-        "ollama": [
-            ("llama3.1 local", "llama3.1"),
-            ("qwen3", "qwen3"),
-        ]
+        "ollama": dynamic_ollama_model_list("http://localhost:11434/v1"),
     }
     
     choice = questionary.select(
